@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import AssignmentService from "../services/AssignmentService";
 import { Link } from "react-router-dom";
 import { Table, Button, Badge, Form } from "react-bootstrap";
+import  "../styles/ViewAssignments.css";
 
 function ViewAssignments() {
 

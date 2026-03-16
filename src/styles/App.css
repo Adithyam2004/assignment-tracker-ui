@@ -1,190 +1,115 @@
-:root{
-  --primary:#2563eb;
-  --primary-dark:#1d4ed8;
-  --bg:#f5f7fb;
-  --surface:#ffffff;
-  --text:#0f172a;
-  --muted:#6b7280;
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background: linear-gradient(135deg, #74ebd5, #9face6);
+  margin: 0;
+  padding: 0;
 }
 
-*{box-sizing:border-box;}
-
-body{
-  margin:0;
-  font-family:'Segoe UI', 'Roboto', Arial, sans-serif;
-  background:linear-gradient(135deg, #e0e7ff, #f8fafc);
-  color:var(--text);
+.container {
+  width: 80%;
+  margin: auto;
+  margin-top: 30px;
 }
 
-/* NAVBAR */
+/* Card UI */
 
-.navbar{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:16px 32px;
-  background:rgba(15,23,42,0.95);
-  backdrop-filter:blur(3px);
-  color:white;
-  box-shadow:0 5px 20px rgba(15,23,42,0.35);
-  position:sticky;
-  top:0;
-  z-index:100;
+.card {
+  background: white;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0,0,0,0.15);
+  margin-bottom: 20px;
 }
 
-.logo{
-font-size:20px;
-font-weight:bold;
+/* Form */
+
+.form-group {
+  margin-bottom: 15px;
 }
 
-.nav-links a{
-color:white;
-text-decoration:none;
-margin-left:25px;
-font-size:15px;
-transition:0.3s;
+label {
+  font-weight: bold;
 }
 
-.nav-links a:hover{
-color:#38bdf8;
+input, textarea {
+  width: 100%;
+  padding: 10px;
+  margin-top: 6px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 14px;
 }
 
-/* HERO SECTION */
+/* Buttons */
 
-.hero{
-text-align:center;
-padding:70px 20px;
-background:linear-gradient(120deg,#2563eb,#4f46e5);
-color:white;
+button {
+  padding: 10px 18px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  margin-right: 10px;
 }
 
-.hero h1{
-font-size:40px;
-margin-bottom:10px;
+.btn-add {
+  background: #28a745;
+  color: white;
 }
 
-.hero p{
-font-size:18px;
-opacity:0.9;
+.btn-add:hover {
+  background: #218838;
 }
 
-/* DASHBOARD CARDS */
-
-.dashboard{
-display:flex;
-justify-content:center;
-gap:30px;
-padding:40px;
-flex-wrap:wrap;
+.btn-delete {
+  background: #dc3545;
+  color: white;
 }
 
-.card{
-background:white;
-padding:25px;
-width:250px;
-border-radius:10px;
-box-shadow:0 5px 15px rgba(0,0,0,0.1);
-transition:0.3s;
-text-align:center;
+.btn-delete:hover {
+  background: #c82333;
 }
 
-.card:hover{
-transform:translateY(-5px);
-box-shadow:0 10px 20px rgba(0,0,0,0.15);
+.btn-view {
+  background: #007bff;
+  color: white;
 }
 
-/* CONTAINER */
-
-.container{
-width:85%;
-margin:auto;
-margin-top:40px;
-background:white;
-padding:30px;
-border-radius:10px;
-box-shadow:0 5px 15px rgba(0,0,0,0.1);
+.btn-view:hover {
+  background: #0056b3;
 }
 
-/* FORM */
+/* Assignment list */
 
-form{
-display:flex;
-flex-direction:column;
-max-width:400px;
+.assignment-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px,1fr));
+  gap: 20px;
 }
 
-form input,
-form select{
-padding:10px;
-margin-top:10px;
-border:1px solid #ccc;
-border-radius:6px;
-font-size:14px;
+.assignment-card {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0,0,0,0.15);
+  transition: transform 0.2s;
 }
 
-form input:focus,
-form select:focus{
-outline:none;
-border-color:#2563eb;
+.assignment-card:hover {
+  transform: translateY(-5px);
 }
 
-/* BUTTON */
-
-button{
-margin-top:15px;
-padding:10px;
-border:none;
-border-radius:6px;
-background:#2563eb;
-color:white;
-font-weight:600;
-cursor:pointer;
-transition:0.3s;
+.assignment-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 8px;
 }
 
-button:hover{
-background:#1d4ed8;
+.assignment-subject {
+  color: #555;
 }
 
-/* TABLE */
-
-table{
-width:100%;
-margin-top:20px;
-border-collapse:collapse;
-}
-
-thead{
-background:#2563eb;
-color:white;
-}
-
-th,td{
-padding:12px;
-border-bottom:1px solid #ddd;
-}
-
-tbody tr:hover{
-background:#f1f5f9;
-}
-
-/* ACTIONS */
-
-td button{
-background:#ef4444;
-margin-left:10px;
-}
-
-td button:hover{
-background:#dc2626;
-}
-
-td a{
-color:#2563eb;
-text-decoration:none;
-font-weight:500;
-}
-
-td a:hover{
-text-decoration:underline;
+.assignment-date {
+  color: #888;
+  font-size: 13px;
+  margin-top: 5px;
 }
