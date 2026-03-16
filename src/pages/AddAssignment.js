@@ -1,11 +1,13 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import AssignmentService from "../services/AssignmentService";
 import "../styles/AddAssignment.css";
 
 function AddAssignment() {
 
   const navigate = useNavigate();
+  const { id } = useParams();
+
   const [assignment, setAssignment] = useState({
     studentName: "",
     subject: "",
@@ -14,10 +16,25 @@ function AddAssignment() {
     priority: "",
     status: "Pending"
   });
+
   const [feedback, setFeedback] = useState("");
 
+  useEffect(() => {
+
+    if (id) {
+      AssignmentService.getAssignmentById(id)
+        .then(res => {
+          setAssignment(res.data);
+        })
+        .catch(err => console.log(err));
+    }
+
+  }, [id]);
+
   const handleChange = (e) => {
+
     const { name, value } = e.target;
+
     const cleanedValue = name === "studentName"
       ? value.replace(/[^a-zA-Z\s]/g, "")
       : value;
@@ -29,34 +46,41 @@ function AddAssignment() {
   };
 
   const handleSubmit = (e) => {
+
     e.preventDefault();
 
     if (!assignment.studentName || !assignment.subject || !assignment.title || !assignment.dueDate || !assignment.priority) {
-      setFeedback("Please complete all fields before submitting.");
+      setFeedback("Please complete all fields.");
       return;
     }
 
-    if (!/^[A-Za-z\s]+$/.test(assignment.studentName.trim())) {
-      setFeedback("Student name must contain only letters and spaces.");
-      return;
-    }
+    if (id) {
 
-    AssignmentService.addAssignment(assignment)
-      .then(() => {
-        setFeedback("Assignment added successfully. Redirecting to view page...");
-        setTimeout(() => navigate("/view"), 900);
-      })
-      .catch((error) => {
-        console.error(error);
-        setFeedback("Unable to add assignment right now. Check API/database connection.");
-      });
+      AssignmentService.updateAssignment(id, assignment)
+        .then(() => {
+          setFeedback("Assignment updated successfully.");
+          setTimeout(() => navigate("/view"), 800);
+        });
+
+    } else {
+
+      AssignmentService.addAssignment(assignment)
+        .then(() => {
+          setFeedback("Assignment added successfully.");
+          setTimeout(() => navigate("/view"), 800);
+        });
+
+    }
   };
 
   return (
+
     <div className="container">
-      <h2>Add Assignment</h2>
+
+      <h2>{id ? "Edit Assignment" : "Add Assignment"}</h2>
 
       <form onSubmit={handleSubmit}>
+
         <input
           type="text"
           name="studentName"
@@ -93,15 +117,52 @@ function AddAssignment() {
         />
 
         <div className="priority-group">
+
           Priority:
-          <label><input type="radio" name="priority" value="Low" checked={assignment.priority === "Low"} onChange={handleChange}/> Low</label>
-          <label><input type="radio" name="priority" value="Medium" checked={assignment.priority === "Medium"} onChange={handleChange}/> Medium</label>
-          <label><input type="radio" name="priority" value="High" checked={assignment.priority === "High"} onChange={handleChange}/> High</label>
+
+          <label>
+            <input
+              type="radio"
+              name="priority"
+              value="Low"
+              checked={assignment.priority === "Low"}
+              onChange={handleChange}
+            />
+            Low
+          </label>
+
+          <label>
+            <input
+              type="radio"
+              name="priority"
+              value="Medium"
+              checked={assignment.priority === "Medium"}
+              onChange={handleChange}
+            />
+            Medium
+          </label>
+
+          <label>
+            <input
+              type="radio"
+              name="priority"
+              value="High"
+              checked={assignment.priority === "High"}
+              onChange={handleChange}
+            />
+            High
+          </label>
+
         </div>
 
-        <button type="submit">Add Assignment</button>
+        <button type="submit">
+          {id ? "Update Assignment" : "Add Assignment"}
+        </button>
+
         {feedback && <p className="feedback">{feedback}</p>}
+
       </form>
+
     </div>
   );
 }
