@@ -1,0 +1,45 @@
+.search{
+padding:10px;
+margin-bottom:20px;
+width:250px;
+border:1px solid #ccc;
+border-radius:6px;
+}
+
+.status{
+padding:5px 10px;
+border-radius:5px;
+font-size:13px;
+color:white;
+}
+
+.status.Completed{
+background:#16a34a;
+}
+
+.status.Pending{
+background:#f59e0b;
+}
+
+.status.Overdue{
+background:#ef4444;
+}
+
+.priority{
+padding:5px 10px;
+border-radius:5px;
+font-size:13px;
+color:white;
+}
+
+.priority.High{
+background:#ef4444;
+}
+
+.priority.Medium{
+background:#f59e0b;
+}
+
+.priority.Low{
+background:#22c55e;
+}
