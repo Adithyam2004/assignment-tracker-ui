@@ -21,6 +21,7 @@ function ViewAssignments() {
       setAssignments(res.data || []);
     } catch (err) {
       console.error(err);
+    
       setFeedback("Unable to load assignments.");
     } finally {
       setLoading(false);
@@ -90,6 +91,7 @@ function ViewAssignments() {
           <thead className="table-dark">
             <tr>
               <th>Student</th>
+              <th>Email</th> {/* ✅ NEW */}
               <th>Subject</th>
               <th>Title</th>
               <th>Due Date</th>
@@ -106,6 +108,7 @@ function ViewAssignments() {
               <tr key={a.id}>
 
                 <td>{a.studentName}</td>
+                <td>{a.studentEmail}</td> {/* ✅ NEW */}
                 <td>{a.subject}</td>
                 <td>{a.title}</td>
                 <td>{new Date(a.dueDate).toLocaleDateString()}</td>
@@ -121,13 +124,11 @@ function ViewAssignments() {
                   <Form.Select
                     value={a.status}
                     size="sm"
-                    style={{ width:"120PX"}}
+                    style={{ width: "120px" }} 
                     onChange={(e) => changeStatus(a, e.target.value)}
                   >
-
                     <option value="Pending">Pending</option>
                     <option value="Completed">Completed</option>
-
                   </Form.Select>
 
                 </td>

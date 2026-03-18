@@ -10,6 +10,7 @@ function AddAssignment() {
 
   const [assignment, setAssignment] = useState({
     studentName: "",
+    studentEmail: "", // ✅ NEW FIELD
     subject: "",
     title: "",
     dueDate: "",
@@ -35,9 +36,10 @@ function AddAssignment() {
 
     const { name, value } = e.target;
 
-    const cleanedValue = name === "studentName"
-      ? value.replace(/[^a-zA-Z\s]/g, "")
-      : value;
+    const cleanedValue =
+      name === "studentName"
+        ? value.replace(/[^a-zA-Z\s]/g, "")
+        : value;
 
     setAssignment({
       ...assignment,
@@ -49,8 +51,22 @@ function AddAssignment() {
 
     e.preventDefault();
 
-    if (!assignment.studentName || !assignment.subject || !assignment.title || !assignment.dueDate || !assignment.priority) {
+    // ✅ Validation including email
+    if (
+      !assignment.studentName ||
+      !assignment.studentEmail ||
+      !assignment.subject ||
+      !assignment.title ||
+      !assignment.dueDate ||
+      !assignment.priority
+    ) {
       setFeedback("Please complete all fields.");
+      return;
+    }
+
+    // ✅ Email format validation
+    if (!/\S+@\S+\.\S+/.test(assignment.studentEmail)) {
+      setFeedback("Enter a valid email address.");
       return;
     }
 
@@ -60,6 +76,9 @@ function AddAssignment() {
         .then(() => {
           setFeedback("Assignment updated successfully.");
           setTimeout(() => navigate("/view"), 800);
+        })
+        .catch(() => {
+          setFeedback("Email already exists or update failed.");
         });
 
     } else {
@@ -68,6 +87,9 @@ function AddAssignment() {
         .then(() => {
           setFeedback("Assignment added successfully.");
           setTimeout(() => navigate("/view"), 800);
+        })
+        .catch(() => {
+          setFeedback("Email already exists or add failed.");
         });
 
     }
@@ -86,6 +108,15 @@ function AddAssignment() {
           name="studentName"
           placeholder="Student Name"
           value={assignment.studentName}
+          onChange={handleChange}
+        />
+
+        {/* ✅ NEW EMAIL FIELD */}
+        <input
+          type="email"
+          name="studentEmail"
+          placeholder="Student Email"
+          value={assignment.studentEmail}
           onChange={handleChange}
         />
 
