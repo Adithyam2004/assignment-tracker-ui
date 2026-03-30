@@ -1,55 +1,11 @@
-// import React, { useEffect, useState } from "react";
-// import { useParams } from "react-router-dom";
-// import AssignmentService from "../services/AssignmentService";
-// import "../styles/Details.css";
-
-// function AssignmentDetails() {
-
-//   const { id } = useParams();
-//   const [assignment, setAssignment] = useState(null);
-
-//   useEffect(() => {
-//     AssignmentService.getAssignmentById(id)
-//       .then((res) => setAssignment(res.data))
-//       .catch((error) => {
-//         console.error("API error", error);
-//       });
-//   }, [id]);
-
-//   if (!assignment) {
-//     return <div className="container"><h2>Loading assignment details...</h2></div>;
-//   }
-
-//   const due = assignment.dueDate ? new Date(assignment.dueDate).toLocaleDateString() : "N/A";
-
-//   return (
-//     <div className="container">
-//       <h2>Assignment Details</h2>
-//       <p><b>Student:</b> {assignment.studentName || "-"}</p>
-//       <p><b>Subject:</b> {assignment.subject || "-"}</p>
-//       <p><b>Title:</b> {assignment.title || "-"}</p>
-//       <p><b>Due Date:</b> {due}</p>
-//       <p><b>Priority:</b> {assignment.priority || "-"}</p>
-//       <p><b>Status:</b> {assignment.status || "Pending"}</p>
-//     </div>
-//   );
-// }
-
-// export default AssignmentDetails;
-
-
-
-
-
 import React, { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";  // ✅ added
+import { useParams, useNavigate } from "react-router-dom";
 import AssignmentService from "../services/AssignmentService";
 import "../styles/Details.css";
 
 function AssignmentDetails() {
-
   const { id } = useParams();
-  const navigate = useNavigate(); // ✅ added
+  const navigate = useNavigate();
   const [assignment, setAssignment] = useState(null);
 
   useEffect(() => {
@@ -62,8 +18,10 @@ function AssignmentDetails() {
 
   if (!assignment) {
     return (
-      <div className="container text-center">
-        <h2>Loading assignment details...</h2>
+      <div className="details-page">
+        <div className="details-shell loading-shell">
+          <h2>Loading assignment details...</h2>
+        </div>
       </div>
     );
   }
@@ -73,35 +31,90 @@ function AssignmentDetails() {
     : "N/A";
 
   return (
-    <div
-      className="container d-flex justify-content-center align-items-center"
-      style={{ minHeight: "80vh" }}
-    >
-      <div className="card p-4 shadow" style={{ width: "400px" }}>
+    <div className="details-page">
+      <div className="details-shell">
+        <div className="details-topbar">
+          <div>
+            <div className="details-badge">Assignment Record</div>
+            <h2>Assignment Details</h2>
+            <p>View full student and assignment information.</p>
+          </div>
 
-        <h2 className="text-center mb-3">Assignment Details</h2>
+          <button className="back-btn" onClick={() => navigate("/view")}>
+            Back
+          </button>
+        </div>
 
-        <p><b>Student:</b> {assignment.studentName || "-"}</p>
-        <p><b>Email:</b> {assignment.studentEmail || "-"}</p>
-        <p><b>Subject:</b> {assignment.subject || "-"}</p>
-        <p><b>Title:</b> {assignment.title || "-"}</p>
-        <p><b>Due Date:</b> {due}</p>
-        <p><b>Priority:</b> {assignment.priority || "-"}</p>
-        <p><b>Status:</b> {assignment.status || "Pending"}</p>
+        <div className="details-profile-card">
+          <div className="profile-avatar">
+            {(assignment.studentName || "S").charAt(0).toUpperCase()}
+          </div>
 
-        /* ✅ BACK BUTTON */
-        <button
-          className="btn btn-secondary mt-3"
-          onClick={() => navigate("/view")}
-        >
-          Back
-        </button>
+          <div className="profile-main">
+            <h3>{assignment.studentName || "-"}</h3>
+            <p>{assignment.studentEmail || "-"}</p>
+          </div>
 
+          <div className="profile-status">
+            <span
+              className={`details-status-pill ${
+                (assignment.status || "").toLowerCase() === "completed"
+                  ? "done"
+                  : "pending"
+              }`}
+            >
+              {assignment.status || "Pending"}
+            </span>
+          </div>
+        </div>
+
+        <div className="details-info-grid">
+          <div className="info-card">
+            <h4>Student Information</h4>
+
+            <div className="info-row">
+              <span>Name</span>
+              <strong>{assignment.studentName || "-"}</strong>
+            </div>
+
+            <div className="info-row">
+              <span>Email</span>
+              <strong>{assignment.studentEmail || "-"}</strong>
+            </div>
+
+            <div className="info-row">
+              <span>Subject</span>
+              <strong>{assignment.subject || "-"}</strong>
+            </div>
+          </div>
+
+          <div className="info-card">
+            <h4>Assignment Information</h4>
+
+            <div className="info-row">
+              <span>Title</span>
+              <strong>{assignment.title || "-"}</strong>
+            </div>
+
+            <div className="info-row">
+              <span>Due Date</span>
+              <strong>{due}</strong>
+            </div>
+
+            <div className="info-row">
+              <span>Priority</span>
+              <strong>{assignment.priority || "-"}</strong>
+            </div>
+
+            <div className="info-row">
+              <span>Status</span>
+              <strong>{assignment.status || "Pending"}</strong>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
 }
 
 export default AssignmentDetails;
-
-

@@ -1,29 +1,27 @@
 import axios from "axios";
 
-const API_URL = "https://localhost:7060/api/Assignments";
+const API_URL = "http://localhost:5155/api/Assignments";
 
 class AssignmentService {
-
-  getAssignments() {
-    return axios.get(API_URL);
+  async getAssignments() {
+    return await axios.get(API_URL);
   }
 
-  getAssignmentById(id) {
-    return axios.get(`${API_URL}/${id}`);
+  async getAssignmentById(id) {
+    return await axios.get(`${API_URL}/${id}`);
   }
 
-  addAssignment(data) {
-    return axios.post(API_URL, data);
+  async addAssignment(assignment) {
+    return await axios.post(API_URL, assignment);
   }
 
-  updateAssignment(id, data) {
-    return axios.put(`${API_URL}/${id}`, data);
+  async updateAssignment(id, assignment) {
+    return await axios.put(`${API_URL}/${id}`, assignment);
   }
 
-  deleteAssignment(id) {
-    return axios.delete(`${API_URL}/${id}`);
+  async deleteAssignment(id) {
+    return await axios.delete(`${API_URL}/${id}`);
   }
-
 }
 
 export default new AssignmentService();
