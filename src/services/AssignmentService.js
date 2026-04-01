@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:5155/api/Assignments";
+const API_URL =
+  process.env.REACT_APP_API_URL || "http://localhost:5155/api/Assignments";
 
 class AssignmentService {
   async getAssignments() {
@@ -24,4 +25,6 @@ class AssignmentService {
   }
 }
 
-export default new AssignmentService();
+const assignmentService = new AssignmentService();
+
+export default assignmentService;
